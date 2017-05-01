@@ -1,0 +1,78 @@
+<script type="text/x-red" data-template-name="apidetails">
+    <div class="form-row">
+        <label for="node-input-baseurl"><i class="icon-tag"></i> BaseURL</label>
+        <input type="text" id="node-input-baseurl" placeholder="https://dashboard.meraki.com/api/v0/">
+    </div>
+	    <div class="form-row">
+        <label for="node-input-apikey"><i class="icon-tag"></i> API key</label>
+        <input type="password" id="node-input-apikey" placeholder="c85764ffd475747ffd484848de3433">
+    </div>
+</script>
+
+<script type="text/javascript">
+(function() {
+
+    var hasTypedInputs = (typeof jQuery.nodered !== "undefined") && (typeof jQuery.nodered.typedInput !== "undefined");
+
+    RED.nodes.registerType('apidetails',{
+        category: 'Meraki',
+        defaults: {
+            name: { value:"" },
+            baseurl: {value: "https://dashboard.meraki.com/api/v0/", required: true },
+            apikey: { value: "" }
+        },
+        label: function() {
+            return this.name||"apidetails";
+        },
+        credentials: {
+            authToken: {type:"apikey"}
+        }
+    });
+
+
+    RED.nodes.registerType('getMerakiAPIkey',{
+        category: 'Meraki',
+        color: '#ffaaaa',
+        defaults: {
+            name: {value:""},
+            authType: {type:"apidetails"},
+			apikey: {key: "password"},
+			outputType: {type:"d"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "face.png",
+        label: function() {
+            return this.name||"getMerakiAPIkey";
+        }
+    });
+	
+})();
+</script>
+
+
+
+
+<script type="text/x-red" data-template-name="getMerakiAPIkey">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="icon-tag"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="Topic">
+    </div>
+	<div class="form-row">
+        <label for="node-input-outputType">Output as</label>
+        <select id="node-input-outputType" style="width: 300px;">
+            <option value="d">Database</option>
+            <option value="m">MQTT</option>
+        </select>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="getMerakiAPIkey">
+    <p>A node to store/update the Meraki API key.<br/>
+    </p>
+</script>
